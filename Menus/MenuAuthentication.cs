@@ -10,19 +10,20 @@ class MenuAuthentication : Menu
         bool Pleno = user.Position == "Pleno" ? true : false;
         Server1 server = new();
         List<Notice> ListNotice = server.ReturnListNotice();
+        bool isSenior = user.Position == "Senior";
         bool isPleno = user.Position == "PLeno";
 
         Dictionary<int, Action> menuActions = new();
         menuActions.Add(1, () => new MenuDisplayTasks().Execute(user, ListNotice));
         menuActions.Add(2, () => user.MostrarMeetings(DateTime.Now));
         menuActions.Add(3, () => user.ReplacePassword(user));
-        menuActions.Add(4, () => server.NewUserList());
-        menuActions.Add(5, () => server.NewNoticeList());
-        menuActions.Add(6, () => server.NewNoticeList());
-        menuActions.Add(7, () => new MenuSubmitReviewTask().Execute(user));
-        menuActions.Add(8, () => new MenuNewMeeting().Execute());
-        menuActions.Add(9, () => new MenuExitTask().Execute(user, ListNotice));
-        menuActions.Add(10, () => new MenuReviewTasks().Execute(user, ListNotice));
+        menuActions.Add(4, () => ExecuteIfPleno(isSenior, () => server.NewUserList()));
+        menuActions.Add(5, () => ExecuteIfPleno(isSenior, () => server.NewNoticeList()));
+        menuActions.Add(6, () => ExecuteIfPleno(isSenior, () => server.NewNoticeList()));
+        menuActions.Add(7, () => ExecuteIfPleno(isSenior, () => new MenuSubmitReviewTask().Execute(user)));
+        menuActions.Add(8, () => ExecuteIfPleno(isSenior, () => new MenuNewMeeting().Execute()));
+        menuActions.Add(9, () => ExecuteIfPleno(isPleno, () => new MenuExitTask().Execute(user, ListNotice)));
+        menuActions.Add(10, () => ExecuteIfPleno(isPleno, () => new MenuReviewTasks().Execute(user, ListNotice)));
         menuActions.Add(-1, () =>
         {
             Console.WriteLine("Tchau tchau!");
