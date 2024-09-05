@@ -29,6 +29,7 @@ class MenuLogin
                         return;
                     case -1:
                         Console.WriteLine("Tchau tchau!");
+                        Environment.Exit(0);
                         return;
                     default:
                         Console.WriteLine("Opção inválida");

@@ -12,3 +12,4 @@ C:\Users\vinij\OneDrive\Área de Trabalho\-\aulas\TaskMaster\obj\Debug\net8.0\re
 C:\Users\vinij\OneDrive\Área de Trabalho\-\aulas\TaskMaster\obj\Debug\net8.0\TaskMaster.pdb
 C:\Users\vinij\OneDrive\Área de Trabalho\-\aulas\TaskMaster\obj\Debug\net8.0\TaskMaster.genruntimeconfig.cache
 C:\Users\vinij\OneDrive\Área de Trabalho\-\aulas\TaskMaster\obj\Debug\net8.0\ref\TaskMaster.dll
+C:\Users\vinij\OneDrive\Área de Trabalho\-\aulas\TaskMaster\obj\Debug\net8.0\TaskMaster.sourcelink.json
