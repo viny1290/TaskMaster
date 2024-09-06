@@ -9,7 +9,7 @@ class Server1
     {
         if (ListUser.Count == 0)
         {
-            ListUser.Add(new User("Vinicius", 1234, "Pleno", "Back-End"));
+            ListUser.Add(new User("Vinicius", 1234, "Senior", "Back-End"));
         }
         return ListUser;
     }
