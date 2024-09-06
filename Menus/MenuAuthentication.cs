@@ -6,24 +6,22 @@ class MenuAuthentication : Menu
 {
     public void Executer(User user)
     {
-        bool Senior = user.Position == "Senior" || user.Position == "Pleno" ? true : false;
-        bool Pleno = user.Position == "Pleno" ? true : false;
         Server1 server = new();
         List<Notice> ListNotice = server.ReturnListNotice();
-        bool isSenior = user.Position == "Senior";
-        bool isPleno = user.Position == "PLeno";
+        bool isSenior = user.Position == "Senior" || user.Position == "Pleno";
+        bool isPleno = user.Position == "Pleno";
 
         Dictionary<int, Action> menuActions = new();
         menuActions.Add(1, () => new MenuDisplayTasks().Execute(user, ListNotice));
         menuActions.Add(2, () => user.MostrarMeetings(DateTime.Now));
         menuActions.Add(3, () => user.ReplacePassword(user));
-        menuActions.Add(4, () => ExecuteIfPleno(isSenior, () => server.NewUserList()));
-        menuActions.Add(5, () => ExecuteIfPleno(isSenior, () => server.NewNoticeList()));
-        menuActions.Add(6, () => ExecuteIfPleno(isSenior, () => server.NewNoticeList()));
-        menuActions.Add(7, () => ExecuteIfPleno(isSenior, () => new MenuSubmitReviewTask().Execute(user)));
-        menuActions.Add(8, () => ExecuteIfPleno(isSenior, () => new MenuNewMeeting().Execute()));
-        menuActions.Add(9, () => ExecuteIfPleno(isPleno, () => new MenuExitTask().Execute(user, ListNotice)));
-        menuActions.Add(10, () => ExecuteIfPleno(isPleno, () => new MenuReviewTasks().Execute(user, ListNotice)));
+        menuActions.Add(4, () => ExecuteIfSeniorOrPleno(isSenior, () => server.NewUserList()));
+        menuActions.Add(5, () => ExecuteIfSeniorOrPleno(isSenior, () => server.NewNoticeList()));
+        menuActions.Add(6, () => ExecuteIfSeniorOrPleno(isSenior, () => server.NewNoticeList()));
+        menuActions.Add(7, () => ExecuteIfSeniorOrPleno(isSenior, () => new MenuSubmitReviewTask().Execute(user)));
+        menuActions.Add(8, () => ExecuteIfSeniorOrPleno(isSenior, () => new MenuNewMeeting().Execute()));
+        menuActions.Add(9, () => ExecuteIfSeniorOrPleno(isPleno, () => new MenuExitTask().Execute(user, ListNotice)));
+        menuActions.Add(10, () => ExecuteIfSeniorOrPleno(isPleno, () => new MenuReviewTasks().Execute(user, ListNotice)));
         menuActions.Add(-1, () =>
         {
             Console.WriteLine("Tchau tchau!");
@@ -31,9 +29,9 @@ class MenuAuthentication : Menu
             new MenuLogin().Execute();
         });
 
-        void ExecuteIfPleno(bool isPleno, Action action)
+        void ExecuteIfSeniorOrPleno(bool isSeniorOrPleno, Action action)
         {
-            if (isPleno)
+            if (isSeniorOrPleno)
             {
                 action();
             }
@@ -53,7 +51,7 @@ class MenuAuthentication : Menu
             Console.WriteLine("Digite 2 para Exibir suas Reuniões");
             Console.WriteLine("Digite 3 para Redefinir senha");
 
-            if (Senior)
+            if (isSenior)
             {
                 Console.WriteLine("Digite 4 para criar novo usuario");
                 Console.WriteLine("Digite 5 para excluir usuario");
@@ -62,7 +60,7 @@ class MenuAuthentication : Menu
                 Console.WriteLine("Digite 8 para marcar uma Reunião");
             }
 
-            if (Pleno)
+            if (isPleno)
             {
                 Console.WriteLine("Digite 9 para Excluir uma nota");
                 Console.WriteLine("Digite 10 para ver tarefas em revição");
