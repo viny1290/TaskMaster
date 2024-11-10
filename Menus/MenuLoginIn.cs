@@ -1,49 +1,59 @@
 using Models;
 
 namespace Menus;
+
 class MenuLoginIn : Menu
 {
-    public void Execute(List<User> ListUser)
+    // Function to execute the login process for the user
+    public void Execute(List<User> userList)
     {
-        Console.Clear();
-        MenuLogin menuLogin = new();
+        Console.Clear();  // Clear the console for a clean login prompt
+        MenuLogin menuLogin = new();  // Instantiate MenuLogin for redirection if needed
 
-        if (ListUser.Count == 0)
+        // Check if there are any registered users
+        if (userList.Count == 0)
         {
-            Console.WriteLine("Nenhum usuário registrado.");
-            Thread.Sleep(3000);
-            return;
+            Console.WriteLine("No users registered.");
+            Thread.Sleep(3000);  // Pause to allow the user to read the message
+            return;  // Exit if no users exist
         }
 
-        Console.Write("Digite o Usuario de Acesso: ");
+        // Prompt user to enter their access username
+        Console.Write("Enter your Username: ");
         string name = Console.ReadLine()!;
-        User? user = ListUser.FirstOrDefault(u => u.Name == name);
+        User? user = userList.FirstOrDefault(u => u.Name == name);  // Find user by name
 
+        // Check if the user exists in the list
         if (user != null)
         {
-            Console.Write("Digite a Senha de Usuario: ");
+            // Prompt user to enter their password
+            Console.Write("Enter your Password: ");
             string password = Console.ReadLine()!;
 
+            // Verify that the password is numeric and matches the user's stored password
             if (int.TryParse(password, out int passwordNumber))
             {
                 if (passwordNumber == user.Password)
                 {
+                    // If password is correct, navigate to authenticated menu
                     MenuAuthentication menuAuthentication = new();
-                    menuAuthentication.Executer(user);
+                    menuAuthentication.Execute(user);  // Execute authenticated menu for the user
                 }
                 else
                 {
-                    Console.WriteLine("Senha Incorreta.");
-                    Thread.Sleep(3000);
-                    menuLogin.Execute();
+                    // If password is incorrect, show error message and return to login
+                    Console.WriteLine("Incorrect Password.");
+                    Thread.Sleep(3000);  // Pause to allow user to read the message
+                    menuLogin.Execute();  // Restart login process
                 }
             }
         }
         else
         {
-            Console.WriteLine("Usuario não Encontrado.");
-            Thread.Sleep(3000);
-            menuLogin.Execute();
+            // If username is not found, show error message and return to login
+            Console.WriteLine("User not found.");
+            Thread.Sleep(3000);  // Pause to allow user to read the message
+            menuLogin.Execute();  // Restart login process
         }
     }
 }

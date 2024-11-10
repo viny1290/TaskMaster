@@ -2,95 +2,107 @@ using Models;
 using Server;
 
 namespace Menus;
+
 class MenuAuthentication : Menu
 {
-    public void Executer(User user)
+    // Method to execute authentication menu actions based on user role
+    public void Execute(User user)
     {
         Server1 server = new();
-        List<Notice> ListNotice = server.ReturnListNotice();
+        List<Notice> noticeList = server.ReturnListNotice();
+
+        // Define user roles for access control
         bool isSenior = user.Position == "Senior" || user.Position == "Pleno";
         bool isPleno = user.Position == "Pleno";
 
+        // Dictionary to map menu options to actions
         Dictionary<int, Action> menuActions = new();
-        menuActions.Add(1, () => new MenuDisplayTasks().Execute(user, ListNotice));
-        menuActions.Add(2, () => user.MostrarMeetings(DateTime.Now));
-        menuActions.Add(3, () => user.ReplacePassword(user));
-        menuActions.Add(4, () => ExecuteIfSeniorOrPleno(isPleno, () => server.NewUserList()));
-        menuActions.Add(5, () => ExecuteIfSeniorOrPleno(isPleno, () => server.NewNoticeList()));
-        menuActions.Add(6, () => ExecuteIfSeniorOrPleno(isPleno, () => server.NewNoticeList()));
-        menuActions.Add(7, () => ExecuteIfSeniorOrPleno(isPleno, () => new MenuSubmitReviewTask().Execute(user)));
-        menuActions.Add(8, () => ExecuteIfSeniorOrPleno(isPleno, () => new MenuNewMeeting().Execute()));
-        menuActions.Add(9, () => ExecuteIfSeniorOrPleno(isSenior, () => new MenuExitTask().Execute(user, ListNotice)));
-        menuActions.Add(10, () => ExecuteIfSeniorOrPleno(isSenior, () => new MenuReviewTasks().Execute(user, ListNotice)));
-        menuActions.Add(-1, () =>
+        menuActions.Add(1, () => new MenuDisplayTasks().Execute(user, noticeList));  // Display group tasks
+        menuActions.Add(2, () => user.ShowMeetings(DateTime.Now));                    // Display meetings
+        menuActions.Add(3, () => user.ReplacePassword(user));                         // Change password
+        menuActions.Add(4, () => ExecuteIfSeniorOrPleno(isPleno, () => server.NewUserList()));  // Create new user
+        menuActions.Add(5, () => ExecuteIfSeniorOrPleno(isPleno, () => server.NewNoticeList())); // Delete user
+        menuActions.Add(6, () => ExecuteIfSeniorOrPleno(isPleno, () => server.NewNoticeList())); // Create task
+        menuActions.Add(7, () => ExecuteIfSeniorOrPleno(isPleno, () => new MenuSubmitReviewTask().Execute(user))); // Submit task for review
+        menuActions.Add(8, () => ExecuteIfSeniorOrPleno(isPleno, () => new MenuNewMeeting().Execute()));  // Schedule a meeting
+        menuActions.Add(9, () => ExecuteIfSeniorOrPleno(isSenior, () => new MenuExitTask().Execute(user, noticeList))); // Delete note
+        menuActions.Add(10, () => ExecuteIfSeniorOrPleno(isSenior, () => new MenuReviewTasks().Execute(user, noticeList))); // View tasks in review
+        menuActions.Add(-1, () =>  // Exit option
         {
-            Console.WriteLine("Tchau tchau!");
+            Console.WriteLine("Goodbye!");
             Thread.Sleep(3000);
-            new MenuLogin().Execute();
+            new MenuLogin().Execute();  // Return to login menu
         });
 
+        // Method to execute an action only if user is Senior or Pleno
         void ExecuteIfSeniorOrPleno(bool isSeniorOrPleno, Action action)
         {
             if (isSeniorOrPleno)
             {
-                action();
+                action();  // Execute action if authorized
             }
             else
             {
-                Console.WriteLine("Entrada inválida");
-                Thread.Sleep(3000);
+                Console.WriteLine("Invalid entry");
+                Thread.Sleep(3000);  // Pause before refreshing
             }
         }
 
+        // Method to display the menu and handle user input
         void ExecuteMenu()
         {
             Console.Clear();
-            showTitle($"Suas Opções de Tarefas {user.Name}");
-            user.YourMeeting();
-            Console.WriteLine($"\nDigite 1 para Exibir as tarefas do grupo de {user.Type}");
-            Console.WriteLine("Digite 2 para Exibir suas Reuniões");
-            Console.WriteLine("Digite 3 para Redefinir senha");
+            showTitle($"Your Task Options {user.Name}");  // Display user-specific title
+            user.YourMeeting();  // Show user's meetings
 
+            // Display basic options for all users
+            Console.WriteLine($"\nEnter 1 to display {user.Type} group tasks");
+            Console.WriteLine("Enter 2 to display your meetings");
+            Console.WriteLine("Enter 3 to reset your password");
+
+            // Display additional options for 'Pleno' users
             if (isPleno)
             {
-                Console.WriteLine("Digite 4 para criar novo usuario");
-                Console.WriteLine("Digite 5 para excluir usuario");
-                Console.WriteLine("Digite 6 para criar tarefa");
-                Console.WriteLine("Digite 7 para enviar tarefa para revisão");
-                Console.WriteLine("Digite 8 para marcar uma Reunião");
+                Console.WriteLine("Enter 4 to create a new user");
+                Console.WriteLine("Enter 5 to delete a user");
+                Console.WriteLine("Enter 6 to create a task");
+                Console.WriteLine("Enter 7 to submit a task for review");
+                Console.WriteLine("Enter 8 to schedule a meeting");
             }
 
+            // Display additional options for 'Senior' users
             if (isSenior)
             {
-                Console.WriteLine("Digite 9 para Excluir uma nota");
-                Console.WriteLine("Digite 10 para ver tarefas em revição");
+                Console.WriteLine("Enter 9 to delete a note");
+                Console.WriteLine("Enter 10 to view tasks under review");
             }
 
-            Console.WriteLine("Digite -1 para Sair");
-            Console.Write("Digite sua opção: ");
+            Console.WriteLine("Enter -1 to Exit");  // Option to exit
+            Console.Write("Enter your option: ");
 
+            // Process user input
             string chosenOption = Console.ReadLine()!;
-
             if (int.TryParse(chosenOption, out int chosenOptionNumber))
             {
+                // Execute the selected action if it exists
                 if (menuActions.TryGetValue(chosenOptionNumber, out Action action))
                 {
                     action();
-                    ExecuteMenu();
+                    ExecuteMenu();  // Redisplay menu after action
                 }
                 else
                 {
-                    Console.WriteLine("Opção Inválida");
+                    Console.WriteLine("Invalid option");
                     Thread.Sleep(3000);
                 }
             }
             else
             {
-                Console.WriteLine("Opção Inválida");
+                Console.WriteLine("Invalid option");
                 Thread.Sleep(3000);
             }
         }
 
-        ExecuteMenu();
+        ExecuteMenu();  // Start the menu loop
     }
 }

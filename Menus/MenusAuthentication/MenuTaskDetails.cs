@@ -1,23 +1,31 @@
 using Models;
 
 namespace Menus;
+
 class MenuTaskDetails
 {
-    public void Execute(List<Notice> ListNotice)
+    // Method to display details of a specific task
+    public void Execute(List<Notice> noticeList)
     {
-        Console.Write("Digite o nome da tarefa para ver detalhes: ");
-        String task = Console.ReadLine()!;
-        Notice? notice = ListNotice.FirstOrDefault(u => u.Name == task);
+        // Prompt the user to enter the name of the task to view details
+        Console.Write("Enter the name of the task to view details: ");
+        string taskName = Console.ReadLine()!;
 
+        // Search for the task in the list by name
+        Notice? notice = noticeList.FirstOrDefault(n => n.Name == taskName);
+
+        // If the task is found, display its details; otherwise, show an error message
         if (notice != null)
         {
-            notice.NoticeUpdates();
+            notice.NoticeUpdates();  // Display updates for the selected task
         }
         else
         {
-            Console.WriteLine("Tarefa não Encontrado.");
+            Console.WriteLine("Task not found.");  // Error message if task is not found
         }
-        Console.WriteLine($"\nDigite qualquer tecla para voltar ao menu");
+
+        // Prompt to return to the previous menu
+        Console.WriteLine("\nPress any key to return to the menu");
         Console.ReadKey();
     }
 }

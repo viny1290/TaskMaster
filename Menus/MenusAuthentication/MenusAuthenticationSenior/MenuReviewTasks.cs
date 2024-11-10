@@ -1,94 +1,106 @@
 using Models;
 
 namespace Menus;
+
 class MenuReviewTasks
 {
-    public void Execute(User user, List<Notice> ListNotice)
+    // Method to allow the user to review tasks and finalize or return them
+    public void Execute(User user, List<Notice> noticeList)
     {
-        if (ListNotice.Count != 0)
+        if (noticeList.Count != 0) // Check if there are tasks to review
         {
             bool exit = false;
 
             while (!exit)
             {
                 Console.Clear();
-                foreach (var notice in ListNotice)
+
+                // Display tasks that are under review for the user's group
+                foreach (var notice in noticeList)
                 {
                     if (notice.Group == user.Type)
                     {
-                        if (notice.Progress == "Revisão")
+                        if (notice.Progress == "Revisão") // Only show tasks in the "Revisão" status
                         {
-                            DateTime time = DateTime.Now;
-                            DateTime expectedDate = notice.Date.AddDays(notice.Term);
-                            int daysRemaining = (expectedDate - time).Days;
-                            Console.WriteLine($"Tarefa: {notice.Name}, falta {daysRemaining} dia(s) para o fim do prazo");
-
+                            DateTime currentTime = DateTime.Now;
+                            DateTime deadline = notice.Date.AddDays(notice.Term);
+                            int daysRemaining = (deadline - currentTime).Days;
+                            Console.WriteLine($"Task: {notice.Name}, {daysRemaining} day(s) remaining until deadline");
                         }
                     }
                 }
-                Console.WriteLine("\nDigite 1 para finalizar uma Tarefa");
-                Console.WriteLine("Digite 2 para retornar uma Tarefa");
-                Console.WriteLine("Digite -1 para Voltar");
-                Console.Write("Digite sua opção: ");
-                String chosenOption1 = Console.ReadLine()!;
 
+                // Display menu options for reviewing tasks
+                Console.WriteLine("\nEnter 1 to finalize a task");
+                Console.WriteLine("Enter 2 to return a task for further work");
+                Console.WriteLine("Enter -1 to go back");
+                Console.Write("Enter your option: ");
+
+                string chosenOption1 = Console.ReadLine()!;
+
+                // Handle user input and execute corresponding actions
                 if (int.TryParse(chosenOption1, out int chosenOptionNumber1))
                 {
                     switch (chosenOptionNumber1)
                     {
-                        case 1:
-                            Console.Write("Digite o nome da tarefa para Atualizar: ");
-                            String tarefa = Console.ReadLine()!;
-                            Notice? notice = ListNotice.FirstOrDefault(u => u.Name == tarefa);
-                            if (notice != null)
+                        case 1: // Finalize a task
+                            Console.Write("Enter the name of the task to finalize: ");
+                            string taskName = Console.ReadLine()!;
+                            Notice? taskToFinalize = noticeList.FirstOrDefault(u => u.Name == taskName);
+
+                            if (taskToFinalize != null)
                             {
-                                ListNotice.Remove(notice);
-                                Console.WriteLine($"Tarefa {tarefa} finalizada");
+                                noticeList.Remove(taskToFinalize); // Remove task from the list
+                                Console.WriteLine($"Task {taskName} finalized.");
                             }
                             else
                             {
-                                Console.WriteLine("Tarefa não Encontrado.");
+                                Console.WriteLine("Task not found.");
                             }
-                            Thread.Sleep(3000);
+                            Thread.Sleep(3000); // Pause for 3 seconds
                             break;
-                        case 2:
-                            Console.Write("Digite o nome da tarefa para Atualizar: ");
-                            String tarefa1 = Console.ReadLine()!;
-                            Notice? notice1 = ListNotice.FirstOrDefault(u => u.Name == tarefa1);
 
-                            if (notice1 != null)
+                        case 2: // Return a task for further updates
+                            Console.Write("Enter the name of the task to update: ");
+                            string taskToUpdateName = Console.ReadLine()!;
+                            Notice? taskToUpdate = noticeList.FirstOrDefault(u => u.Name == taskToUpdateName);
+
+                            if (taskToUpdate != null)
                             {
-                                Console.Write("Digite sua Atualização: ");
-                                String texto = Console.ReadLine()!;
+                                Console.Write("Enter your update: ");
+                                string updateText = Console.ReadLine()!;
 
-                                notice1.NewUpdate(user.Name, texto, "Desenvolvimento");
-
-                                Console.WriteLine("Tarefa Atualizada com sucesso");
+                                taskToUpdate.NewUpdate(user.Name, updateText, "Development"); // Add a new update to the task
+                                Console.WriteLine("Task updated successfully.");
                             }
                             else
                             {
-                                Console.WriteLine("Tarefa não Encontrado.");
+                                Console.WriteLine("Task not found.");
                             }
-                            Thread.Sleep(3000);
+                            Thread.Sleep(3000); // Pause for 3 seconds
                             break;
-                        case -1:
+
+                        case -1: // Exit the loop and return to the main menu
                             exit = true;
                             break;
+
                         default:
                             break;
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Entrada inválida");
+                    Console.WriteLine("Invalid input.");
                 }
             }
         }
         else
         {
-            Console.WriteLine("Seu time não tem tarefas");
+            Console.WriteLine("Your team has no tasks.");
         }
-        Console.WriteLine($"Digite qualquer tecla para voltar ao menu");
+
+        // Prompt user to press any key to go back to the menu
+        Console.WriteLine("Press any key to go back to the menu.");
         Console.ReadKey();
     }
 }

@@ -1,13 +1,13 @@
 namespace Menus;
 class Menu
 {
-    public void showTitle(string titulo)
+    public void showTitle(string text)
     {
-        int quantityNumbers= titulo.Length;
+        int quantityNumbers= text.Length;
         string asterisks = string.Empty.PadLeft(quantityNumbers, '*');
 
         Console.WriteLine(asterisks);
-        Console.WriteLine(titulo);
+        Console.WriteLine(text);
         Console.WriteLine(asterisks);
     }
 }

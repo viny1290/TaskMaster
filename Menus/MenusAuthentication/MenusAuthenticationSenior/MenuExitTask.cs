@@ -1,36 +1,42 @@
 using Models;
 
 namespace Menus;
+
 class MenuExitTask
 {
-    public void Execute(User user, List<Notice> ListNotice)
+    // Method to display tasks and allow the user to delete a specific task
+    public void Execute(User user, List<Notice> noticeList)
     {
         Console.Clear();
-        foreach (var notice in ListNotice)
+
+        // Display tasks related to the user's group and show days remaining for each task's deadline
+        foreach (var notice in noticeList)
         {
             if (notice.Group == user.Type)
             {
-                DateTime time = DateTime.Now;
-                DateTime expectedDate = notice.Date.AddDays(notice.Term);
-                int daysRemaining = (expectedDate - time).Days;
-                Console.WriteLine($"Tarefa: {notice.Name}, falta {daysRemaining} dia(s) para o fim do prazo");
-
+                DateTime currentTime = DateTime.Now;
+                DateTime deadline = notice.Date.AddDays(notice.Term);
+                int daysRemaining = (deadline - currentTime).Days;
+                Console.WriteLine($"Task: {notice.Name}, {daysRemaining} day(s) remaining until deadline");
             }
         }
-        Console.Write("Digite o nome da tarefa: ");
-        string tarefaName = Console.ReadLine()!;
 
-        Notice? noticeSearch = ListNotice.FirstOrDefault(u => u.Name == tarefaName);
+        // Prompt user to enter the name of the task to delete
+        Console.Write("Enter the name of the task: ");
+        string taskName = Console.ReadLine()!;
 
-        if (noticeSearch != null)
+        // Search for the task in the list by name
+        Notice? taskToDelete = noticeList.FirstOrDefault(n => n.Name == taskName);
+
+        // If the task is found, delete it from the list; otherwise, show an error message
+        if (taskToDelete != null)
         {
-            ListNotice.Remove(noticeSearch);
-
-            Console.WriteLine($"Tarefa {tarefaName} excluida com sucesso");
+            noticeList.Remove(taskToDelete);
+            Console.WriteLine($"Task {taskName} successfully deleted.");
         }
         else
         {
-            Console.WriteLine("Tarefa não Encontrada.");
+            Console.WriteLine("Task not found.");
         }
     }
 }
