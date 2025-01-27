@@ -4,56 +4,56 @@ namespace Menus;
 
 class MenuLoginIn : Menu
 {
-    // Function to execute the login process for the user
+    // Função para executar o processo de login do usuário
     public void Execute(List<User> userList)
     {
-        Console.Clear();  // Clear the console for a clean login prompt
-        MenuLogin menuLogin = new();  // Instantiate MenuLogin for redirection if needed
+        Console.Clear();  // Limpa o console para exibir uma tela de login limpa
+        MenuLogin menuLogin = new();  // Instancia o MenuLogin para redirecionar caso necessário
 
-        // Check if there are any registered users
+        // Verifica se há usuários cadastrados
         if (userList.Count == 0)
         {
-            Console.WriteLine("No users registered.");
-            Thread.Sleep(3000);  // Pause to allow the user to read the message
-            return;  // Exit if no users exist
+            Console.WriteLine("Nenhum usuário cadastrado.");
+            Thread.Sleep(3000);  // Pausa por 3 segundos para o usuário ler a mensagem
+            return;  // Sai da função se não houver usuários cadastrados
         }
 
-        // Prompt user to enter their access username
-        Console.Write("Enter your Username: ");
-        string name = Console.ReadLine()!;
-        User? user = userList.FirstOrDefault(u => u.Name == name);  // Find user by name
+        // Solicita que o usuário digite seu nome de usuário
+        Console.Write("Digite seu Nome de Usuário: ");
+        string name = Console.ReadLine()!;  // Lê o nome do usuário digitado
+        User? user = userList.FirstOrDefault(u => u.Name == name);  // Busca o usuário pelo nome
 
-        // Check if the user exists in the list
+        // Verifica se o usuário foi encontrado na lista
         if (user != null)
         {
-            // Prompt user to enter their password
-            Console.Write("Enter your Password: ");
-            string password = Console.ReadLine()!;
+            // Solicita que o usuário digite a senha
+            Console.Write("Digite sua Senha: ");
+            string password = Console.ReadLine()!;  // Lê a senha digitada
 
-            // Verify that the password is numeric and matches the user's stored password
+            // Verifica se a senha digitada é numérica e se corresponde à senha armazenada
             if (int.TryParse(password, out int passwordNumber))
             {
                 if (passwordNumber == user.Password)
                 {
-                    // If password is correct, navigate to authenticated menu
+                    // Se a senha estiver correta, redireciona para o menu autenticado
                     MenuAuthentication menuAuthentication = new();
-                    menuAuthentication.Execute(user);  // Execute authenticated menu for the user
+                    menuAuthentication.Execute(user);  // Executa o menu autenticado para o usuário
                 }
                 else
                 {
-                    // If password is incorrect, show error message and return to login
-                    Console.WriteLine("Incorrect Password.");
-                    Thread.Sleep(3000);  // Pause to allow user to read the message
-                    menuLogin.Execute();  // Restart login process
+                    // Se a senha estiver incorreta, exibe a mensagem de erro e reinicia o processo de login
+                    Console.WriteLine("Senha Incorreta.");
+                    Thread.Sleep(3000);  // Pausa por 3 segundos para o usuário ler a mensagem
+                    menuLogin.Execute();  // Reinicia o processo de login
                 }
             }
         }
         else
         {
-            // If username is not found, show error message and return to login
-            Console.WriteLine("User not found.");
-            Thread.Sleep(3000);  // Pause to allow user to read the message
-            menuLogin.Execute();  // Restart login process
+            // Se o nome de usuário não for encontrado, exibe a mensagem de erro e reinicia o processo de login
+            Console.WriteLine("Usuário não encontrado.");
+            Thread.Sleep(3000);  // Pausa por 3 segundos para o usuário ler a mensagem
+            menuLogin.Execute();  // Reinicia o processo de login
         }
     }
 }

@@ -4,58 +4,58 @@ using Server;
 
 class MenuLogin
 {
-    // Main function to execute the login menu
+    // Função principal para executar o menu de login
     public void Execute()
     {
-        // Instantiate the server and get the list of users
+        // Instancia o servidor e obtém a lista de usuários
         Server1 server = new();
         List<User> userList = server.ReturnListUser();
 
-        // Loop until the user decides to exit
+        // Loop até o usuário decidir sair
         while (true)
         {
-            Console.Clear();  // Clear the console screen for a fresh view
+            Console.Clear();  // Limpa a tela do console para uma visualização limpa
 
-            // Show the welcome title using the Menu class
+            // Exibe o título de boas-vindas usando a classe Menu
             Menu menu = new();
-            menu.showTitle("Welcome to TaskMaster!");
+            menu.showTitle("Bem-vindo ao TaskMaster!");
 
-            // Display login options
-            Console.WriteLine("\nEnter 1 to Login");
-            Console.WriteLine("Enter -1 to Exit");
+            // Exibe as opções de login
+            Console.WriteLine("\nDigite 1 para Login");
+            Console.WriteLine("Digite -1 para Sair");
 
-            Console.Write("Enter your option: ");
-            string chosenOption = Console.ReadLine()!;  // Get user input
+            Console.Write("Digite a sua opção: ");
+            string chosenOption = Console.ReadLine()!;  // Obtém a entrada do usuário
 
-            // Check if input is a valid integer
+            // Verifica se a entrada é um número inteiro válido
             if (int.TryParse(chosenOption, out int chosenOptionNumber))
             {
-                // Execute based on the chosen option
+                // Executa com base na opção escolhida
                 switch (chosenOptionNumber)
                 {
                     case 1:
-                        // If user chooses to log in, execute the login menu with the user list
+                        // Se o usuário escolher logar, executa o menu de login com a lista de usuários
                         MenuLoginIn menuLoginIn = new();
                         menuLoginIn.Execute(userList);
-                        return;  // Exit after login
+                        return;  // Sai após o login
                     case -1:
-                        // If user chooses to exit, show a message and terminate the application
-                        Console.WriteLine("Goodbye!");
+                        // Se o usuário escolher sair, exibe uma mensagem e termina a aplicação
+                        Console.WriteLine("Até logo!");
                         Environment.Exit(0);
                         return;
                     default:
-                        // Handle invalid option input
-                        Console.WriteLine("Invalid option");
-                        Thread.Sleep(2000);  // Wait before refreshing
+                        // Lida com uma entrada de opção inválida
+                        Console.WriteLine("Opção inválida");
+                        Thread.Sleep(2000);  // Espera 2 segundos antes de atualizar a tela
                         break;
                 }
             }
             else
             {
-                // Handle non-integer inputs
-                Console.WriteLine("Invalid input");
-                Thread.Sleep(2000);  // Wait before refreshing
-                Execute();  // Restart the menu
+                // Lida com entradas não numéricas
+                Console.WriteLine("Entrada inválida");
+                Thread.Sleep(2000);  // Espera 2 segundos antes de atualizar a tela
+                Execute();  // Reinicia o menu
             }
         }
     }
