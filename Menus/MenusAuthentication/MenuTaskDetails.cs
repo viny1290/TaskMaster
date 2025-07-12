@@ -4,28 +4,28 @@ namespace Menus;
 
 class MenuTaskDetails
 {
-    // Method to display details of a specific task
+    // Método para exibir os detalhes de uma tarefa específica
     public void Execute(List<Notice> noticeList)
     {
-        // Prompt the user to enter the name of the task to view details
-        Console.Write("Enter the name of the task to view details: ");
+        // Solicita ao usuário para inserir o nome da tarefa para visualizar os detalhes
+        Console.Write("Digite o nome da tarefa para ver os detalhes: ");
         string taskName = Console.ReadLine()!;
 
-        // Search for the task in the list by name
+        // Procura a tarefa na lista pelo nome
         Notice? notice = noticeList.FirstOrDefault(n => n.Name == taskName);
 
-        // If the task is found, display its details; otherwise, show an error message
+        // Se a tarefa for encontrada, exibe seus detalhes; caso contrário, mostra uma mensagem de erro
         if (notice != null)
         {
-            notice.NoticeUpdates();  // Display updates for the selected task
+            notice.NoticeUpdates(); // Exibe as atualizações para a tarefa selecionada
         }
         else
         {
-            Console.WriteLine("Task not found.");  // Error message if task is not found
+            Console.WriteLine("Tarefa não encontrada."); // Mensagem de erro se a tarefa não for encontrada
         }
 
-        // Prompt to return to the previous menu
-        Console.WriteLine("\nPress any key to return to the menu");
+        // Solicita para retornar ao menu anterior
+        Console.WriteLine("\nPressione qualquer tecla para retornar ao menu");
         Console.ReadKey();
     }
 }

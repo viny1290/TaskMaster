@@ -13,3 +13,18 @@ C:\Users\vinij\OneDrive\Área de Trabalho\-\aulas\TaskMaster\obj\Debug\net8.0\Ta
 C:\Users\vinij\OneDrive\Área de Trabalho\-\aulas\TaskMaster\obj\Debug\net8.0\TaskMaster.genruntimeconfig.cache
 C:\Users\vinij\OneDrive\Área de Trabalho\-\aulas\TaskMaster\obj\Debug\net8.0\ref\TaskMaster.dll
 C:\Users\vinij\OneDrive\Área de Trabalho\-\aulas\TaskMaster\obj\Debug\net8.0\TaskMaster.sourcelink.json
+C:\Users\vinij\Desktop\_\Programas\Projetos Pessoais\TaskMaster\bin\Debug\net8.0\TaskMaster.exe
+C:\Users\vinij\Desktop\_\Programas\Projetos Pessoais\TaskMaster\bin\Debug\net8.0\TaskMaster.deps.json
+C:\Users\vinij\Desktop\_\Programas\Projetos Pessoais\TaskMaster\bin\Debug\net8.0\TaskMaster.runtimeconfig.json
+C:\Users\vinij\Desktop\_\Programas\Projetos Pessoais\TaskMaster\bin\Debug\net8.0\TaskMaster.dll
+C:\Users\vinij\Desktop\_\Programas\Projetos Pessoais\TaskMaster\bin\Debug\net8.0\TaskMaster.pdb
+C:\Users\vinij\Desktop\_\Programas\Projetos Pessoais\TaskMaster\obj\Debug\net8.0\TaskMaster.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\vinij\Desktop\_\Programas\Projetos Pessoais\TaskMaster\obj\Debug\net8.0\TaskMaster.AssemblyInfoInputs.cache
+C:\Users\vinij\Desktop\_\Programas\Projetos Pessoais\TaskMaster\obj\Debug\net8.0\TaskMaster.AssemblyInfo.cs
+C:\Users\vinij\Desktop\_\Programas\Projetos Pessoais\TaskMaster\obj\Debug\net8.0\TaskMaster.csproj.CoreCompileInputs.cache
+C:\Users\vinij\Desktop\_\Programas\Projetos Pessoais\TaskMaster\obj\Debug\net8.0\TaskMaster.sourcelink.json
+C:\Users\vinij\Desktop\_\Programas\Projetos Pessoais\TaskMaster\obj\Debug\net8.0\TaskMaster.dll
+C:\Users\vinij\Desktop\_\Programas\Projetos Pessoais\TaskMaster\obj\Debug\net8.0\refint\TaskMaster.dll
+C:\Users\vinij\Desktop\_\Programas\Projetos Pessoais\TaskMaster\obj\Debug\net8.0\TaskMaster.pdb
+C:\Users\vinij\Desktop\_\Programas\Projetos Pessoais\TaskMaster\obj\Debug\net8.0\TaskMaster.genruntimeconfig.cache
+C:\Users\vinij\Desktop\_\Programas\Projetos Pessoais\TaskMaster\obj\Debug\net8.0\ref\TaskMaster.dll

@@ -4,33 +4,33 @@ namespace Menus;
 
 class MenuUpdatetask
 {
-    // Method to update a specific task with a new update from the user
+    // Método para atualizar uma tarefa específica com uma nova atualização do usuário
     public void Execute(User user, List<Notice> noticeList)
     {
-        // Prompt the user to enter the name of the task to update
-        Console.Write("Enter the name of the task to update: ");
+        // Solicita ao usuário para inserir o nome da tarefa a ser atualizada
+        Console.Write("Digite o nome da tarefa para atualizar: ");
         string taskName = Console.ReadLine()!;
-        
-        // Search for the task in the list by name
+
+        // Procura a tarefa na lista pelo nome
         Notice? notice = noticeList.FirstOrDefault(n => n.Name == taskName);
 
-        // If the task is found, prompt for an update message; otherwise, display an error
+        // Se a tarefa for encontrada, solicita uma mensagem de atualização; caso contrário, exibe um erro
         if (notice != null)
         {
-            Console.Write("Enter your update: ");
+            Console.Write("Digite sua atualização: ");
             string updateText = Console.ReadLine()!;
 
-            // Record the new update with the user's name, update text, and status as "Development"
-            notice.NewUpdate(user.Name, updateText, "Development");
+            // Registra a nova atualização com o nome do usuário, texto da atualização e status como "Desenvolvimento"
+            notice.NewUpdate(user.Name, updateText, "Desenvolvimento");
 
-            Console.WriteLine("Task updated successfully.");
+            Console.WriteLine("Tarefa atualizada com sucesso.");
         }
         else
         {
-            Console.WriteLine("Task not found.");  // Error message if task is not found
+            Console.WriteLine("Tarefa não encontrada."); // Mensagem de erro se a tarefa não for encontrada
         }
 
-        // Pause briefly to allow user to read message
+        // Pausa brevemente para permitir que o usuário leia a mensagem
         Thread.Sleep(3000);
     }
 }

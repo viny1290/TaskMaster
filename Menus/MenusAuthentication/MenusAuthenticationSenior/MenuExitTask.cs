@@ -4,12 +4,12 @@ namespace Menus;
 
 class MenuExitTask
 {
-    // Method to display tasks and allow the user to delete a specific task
+    // Método para exibir tarefas e permitir que o usuário exclua uma tarefa específica
     public void Execute(User user, List<Notice> noticeList)
     {
         Console.Clear();
 
-        // Display tasks related to the user's group and show days remaining for each task's deadline
+        // Exibe as tarefas relacionadas ao grupo do usuário e mostra os dias restantes para o prazo de cada tarefa
         foreach (var notice in noticeList)
         {
             if (notice.Group == user.Type)
@@ -17,26 +17,26 @@ class MenuExitTask
                 DateTime currentTime = DateTime.Now;
                 DateTime deadline = notice.Date.AddDays(notice.Term);
                 int daysRemaining = (deadline - currentTime).Days;
-                Console.WriteLine($"Task: {notice.Name}, {daysRemaining} day(s) remaining until deadline");
+                Console.WriteLine($"Tarefa: {notice.Name}, {daysRemaining} dia(s) restante(s) até o prazo final");
             }
         }
 
-        // Prompt user to enter the name of the task to delete
-        Console.Write("Enter the name of the task: ");
+        // Solicita ao usuário para inserir o nome da tarefa a ser excluída
+        Console.Write("Digite o nome da tarefa: ");
         string taskName = Console.ReadLine()!;
 
-        // Search for the task in the list by name
+        // Procura a tarefa na lista pelo nome
         Notice? taskToDelete = noticeList.FirstOrDefault(n => n.Name == taskName);
 
-        // If the task is found, delete it from the list; otherwise, show an error message
+        // Se a tarefa for encontrada, exclui-a da lista; caso contrário, mostra uma mensagem de erro
         if (taskToDelete != null)
         {
             noticeList.Remove(taskToDelete);
-            Console.WriteLine($"Task {taskName} successfully deleted.");
+            Console.WriteLine($"Tarefa {taskName} excluída com sucesso.");
         }
         else
         {
-            Console.WriteLine("Task not found.");
+            Console.WriteLine("Tarefa não encontrada.");
         }
     }
 }

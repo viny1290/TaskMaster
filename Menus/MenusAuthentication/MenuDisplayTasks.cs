@@ -4,43 +4,43 @@ namespace Menus;
 
 class MenuDisplayTasks
 {
-    // Method to display tasks associated with the user's group and provide options for task actions
+    // Método para exibir as tarefas associadas ao grupo do usuário e fornecer opções de ações
     public void Execute(User user, List<Notice> noticeList)
     {
-        // Check if there are any notices for the user's group
+        // Verifica se há alguma tarefa para o grupo do usuário
         if (noticeList.Count != 0)
         {
             bool exit = false;
 
-            // Loop to display tasks until the user chooses to exit
+            // Loop para exibir as tarefas até que o usuário escolha sair
             while (!exit)
             {
                 Console.Clear();
 
-                // Display tasks that are part of the user's group and not under review
+                // Exibe as tarefas que pertencem ao grupo do usuário e não estão em revisão
                 foreach (var notice in noticeList)
                 {
-                    if (notice.Group == user.Type)  // Check if task belongs to the user's group
+                    if (notice.Group == user.Type) // Verifica se a tarefa pertence ao grupo do usuário
                     {
-                        if (notice.Progress != "Revisão")  // Exclude tasks under review
+                        if (notice.Progress != "Revisão") // Exclui tarefas em revisão
                         {
                             DateTime currentTime = DateTime.Now;
                             DateTime expectedEndDate = notice.Date.AddDays(notice.Term);
                             int daysRemaining = (expectedEndDate - currentTime).Days;
 
-                            // Display task name and remaining days
-                            Console.WriteLine($"Task: {notice.Name}, {daysRemaining} day(s) remaining until deadline");
+                            // Exibe o nome da tarefa e os dias restantes
+                            Console.WriteLine($"Tarefa: {notice.Name}, {daysRemaining} dia(s) restante(s) até o prazo");
                         }
                     }
                 }
 
-                // Display options for task actions
-                Console.WriteLine("\nEnter 1 to Update a Task");
-                Console.WriteLine("Enter 2 to View Task Details");
-                Console.WriteLine("Enter -1 to Go Back");
-                Console.Write("Enter your option: ");
+                // Exibe as opções para as ações da tarefa
+                Console.WriteLine("\nDigite 1 para Atualizar uma Tarefa");
+                Console.WriteLine("Digite 2 para Ver Detalhes da Tarefa");
+                Console.WriteLine("Digite -1 para Voltar");
+                Console.Write("Digite sua opção: ");
 
-                // Read and process user input for menu actions
+                // Lê e processa a entrada do usuário para as ações do menu
                 string chosenOption = Console.ReadLine()!;
 
                 if (int.TryParse(chosenOption, out int chosenOptionNumber))
@@ -48,38 +48,38 @@ class MenuDisplayTasks
                     switch (chosenOptionNumber)
                     {
                         case 1:
-                            // Initialize the menu to update a task
+                            // Inicializa o menu para atualizar uma tarefa
                             MenuUpdatetask menuUpdatetask = new();
                             menuUpdatetask.Execute(user, noticeList);
                             break;
                         case 2:
-                            // Initialize the menu to view task details
+                            // Inicializa o menu para visualizar os detalhes da tarefa
                             MenuTaskDetails menuTaskDetails = new();
                             menuTaskDetails.Execute(noticeList);
                             break;
                         case -1:
-                            exit = true;  // Exit the loop and return to previous menu
+                            exit = true; // Sai do loop e retorna ao menu anterior
                             break;
                         default:
-                            Console.WriteLine("Invalid option");
-                            Thread.Sleep(2000);  // Pause briefly to allow user to read message
+                            Console.WriteLine("Opção inválida");
+                            Thread.Sleep(2000); // Pausa brevemente para permitir que o usuário leia a mensagem
                             break;
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Invalid entry");  // Display error for non-numeric input
+                    Console.WriteLine("Entrada inválida"); // Exibe erro para entrada não numérica
                     Thread.Sleep(2000);
                 }
             }
         }
         else
         {
-            // Message displayed if there are no tasks for the user's group
-            Console.WriteLine("Your team has no tasks");
+            // Mensagem exibida se não houver tarefas para o grupo do usuário
+            Console.WriteLine("Sua equipe não tem tarefas");
         }
 
-        Console.WriteLine("Press any key to return to the menu");  // Prompt to return to main menu
+        Console.WriteLine("Pressione qualquer tecla para retornar ao menu"); // Solicita para retornar ao menu principal
         Console.ReadKey();
     }
 }

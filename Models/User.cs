@@ -1,10 +1,11 @@
 namespace Models;
+
 class User
 {
-    // List to store the meetings of the user
+    // Lista para armazenar as reuniões do usuário
     List<Meeting> ListMeeting = new();
 
-    // Constructor to initialize the user with name, password, position, and type
+    // Construtor para inicializar o usuário com nome, senha, cargo e tipo
     public User(string name, int password, string position, string type)
     {
         Name = name;
@@ -13,18 +14,18 @@ class User
         Type = type;
     }
 
-    // Properties for the user's information
+    // Propriedades para as informações do usuário
     public string Name { get; }
     public int Password { get; private set; }
     public string Position { get; private set; }
     public string Type { get; private set; }
 
-    // Method to display the user's meetings
+    // Método para exibir as reuniões do usuário
     public void YourMeeting()
     {
         DateTime date = DateTime.Now;
 
-        // Remove meetings that have already passed
+        // Remove reuniões que já passaram
         foreach (Meeting meeting in ListMeeting)
         {
             if (meeting.Date < date)
@@ -33,71 +34,70 @@ class User
             }
         }
 
-        // Print a message depending on the number of meetings
-        Console.WriteLine($"You {(ListMeeting.Count == 0 ? "don't have" : $"have {ListMeeting.Count}")} scheduled meeting(s).");
+        // Imprime uma mensagem dependendo do número de reuniões
+        Console.WriteLine($"Você {(ListMeeting.Count == 0 ? "não tem" : $"tem {ListMeeting.Count}")} reunião(ões) agendada(s).");
     }
 
-    // Method to show the user's meetings on a given date
+    // Método para mostrar as reuniões do usuário em uma determinada data
     public void ShowMeetings(DateTime date)
     {
         Console.Clear();
         foreach (Meeting meeting in ListMeeting)
         {
             string formattedDate = meeting.Date.ToString("dd/MM/yyyy");
-            Console.WriteLine($"Meeting {meeting.Name} on {formattedDate}");
+            Console.WriteLine($"Reunião {meeting.Name} em {formattedDate}");
         }
-        Console.WriteLine($"Press any key to return to the menu");
+        Console.WriteLine($"Pressione qualquer tecla para retornar ao menu");
         Console.ReadKey();
     }
 
-    // Method to add a meeting to the user's list of meetings
+    // Método para adicionar uma reunião à lista de reuniões do usuário
     public void AddMeeting(Meeting meeting)
     {
         ListMeeting.Add(meeting);
     }
 
-    // Method to replace the user's password
+    // Método para substituir a senha do usuário
     public void ReplacePassword(User user)
     {
-        // Ask the user to input their current password
-        Console.Write("Enter your current password: ");
+        // Pede ao usuário para inserir a senha atual
+        Console.Write("Digite sua senha atual: ");
         string password = Console.ReadLine()!;
 
         if (int.TryParse(password, out int passwordNumber))
         {
-            // Check if the entered password matches the current password
+            // Verifica se a senha digitada corresponde à senha atual
             if (passwordNumber == user.Password)
             {
                 while (true)
                 {
-                    // Ask for a new password
-                    Console.Write("Enter your new 4-digit password: ");
+                    // Pede uma nova senha
+                    Console.Write("Digite sua nova senha de 4 dígitos: ");
                     string NewPassword = Console.ReadLine()!;
 
                     if (int.TryParse(NewPassword, out int NewPasswordNumber))
                     {
-                        // Ensure the new password is exactly 4 digits
+                        // Garante que a nova senha tenha exatamente 4 dígitos
                         if (NewPassword.Length == 4)
                         {
                             Password = NewPasswordNumber;
-                            Console.WriteLine("Your password has been successfully changed!");
+                            Console.WriteLine("Sua senha foi alterada com sucesso!");
                             return;
                         }
                         else
                         {
-                            Console.WriteLine("Invalid input. The password must be exactly 4 numeric digits.");
+                            Console.WriteLine("Entrada inválida. A senha deve ter exatamente 4 dígitos numéricos.");
                         }
                     }
                 }
-
             }
             else
             {
-                // If the entered password is incorrect, inform the user
-                Console.WriteLine("Incorrect password");
-                Console.WriteLine("Please ask a superior to reset your password");
+                // Se a senha digitada estiver incorreta, informa o usuário
+                Console.WriteLine("Senha incorreta");
+                Console.WriteLine("Por favor, peça a um superior para redefinir sua senha");
             }
         }
-        Thread.Sleep(2000); // Pause for 2 seconds before returning to the menu
+        Thread.Sleep(2000); // Pausa por 2 segundos antes de retornar ao menu
     }
 }

@@ -4,10 +4,10 @@ namespace Menus;
 
 class MenuReviewTasks
 {
-    // Method to allow the user to review tasks and finalize or return them
+    // Método para permitir ao usuário revisar tarefas e finalizá-las ou retorná-las
     public void Execute(User user, List<Notice> noticeList)
     {
-        if (noticeList.Count != 0) // Check if there are tasks to review
+        if (noticeList.Count != 0) // Verifica se há tarefas para revisar
         {
             bool exit = false;
 
@@ -15,92 +15,95 @@ class MenuReviewTasks
             {
                 Console.Clear();
 
-                // Display tasks that are under review for the user's group
+                // Exibe as tarefas que estão em revisão para o grupo do usuário
                 foreach (var notice in noticeList)
                 {
                     if (notice.Group == user.Type)
                     {
-                        if (notice.Progress == "Revisão") // Only show tasks in the "Revisão" status
+                        if (notice.Progress == "Revisão") // Mostra apenas as tarefas com status "Revisão"
                         {
                             DateTime currentTime = DateTime.Now;
                             DateTime deadline = notice.Date.AddDays(notice.Term);
                             int daysRemaining = (deadline - currentTime).Days;
-                            Console.WriteLine($"Task: {notice.Name}, {daysRemaining} day(s) remaining until deadline");
+                            Console.WriteLine($"Tarefa: {notice.Name}, {daysRemaining} dia(s) restante(s) até o prazo final");
                         }
                     }
                 }
 
-                // Display menu options for reviewing tasks
-                Console.WriteLine("\nEnter 1 to finalize a task");
-                Console.WriteLine("Enter 2 to return a task for further work");
-                Console.WriteLine("Enter -1 to go back");
-                Console.Write("Enter your option: ");
+                // Exibe as opções de menu para revisar tarefas
+                Console.WriteLine("\nDigite 1 para finalizar uma tarefa");
+                Console.WriteLine("Digite 2 para retornar uma tarefa para mais trabalho");
+                Console.WriteLine("Digite -1 para voltar");
+                Console.Write("Digite sua opção: ");
 
                 string chosenOption1 = Console.ReadLine()!;
 
-                // Handle user input and execute corresponding actions
+                // Lida com a entrada do usuário e executa as ações correspondentes
                 if (int.TryParse(chosenOption1, out int chosenOptionNumber1))
                 {
                     switch (chosenOptionNumber1)
                     {
-                        case 1: // Finalize a task
-                            Console.Write("Enter the name of the task to finalize: ");
+                        case 1: // Finalizar uma tarefa
+                            Console.Write("Digite o nome da tarefa para finalizar: ");
                             string taskName = Console.ReadLine()!;
                             Notice? taskToFinalize = noticeList.FirstOrDefault(u => u.Name == taskName);
 
                             if (taskToFinalize != null)
                             {
-                                noticeList.Remove(taskToFinalize); // Remove task from the list
-                                Console.WriteLine($"Task {taskName} finalized.");
+                                noticeList.Remove(taskToFinalize); // Remove a tarefa da lista
+                                Console.WriteLine($"Tarefa {taskName} finalizada.");
                             }
                             else
                             {
-                                Console.WriteLine("Task not found.");
+                                Console.WriteLine("Tarefa não encontrada.");
                             }
-                            Thread.Sleep(3000); // Pause for 3 seconds
+                            Thread.Sleep(3000); // Pausa por 3 segundos
                             break;
 
-                        case 2: // Return a task for further updates
-                            Console.Write("Enter the name of the task to update: ");
+                        case 2: // Retornar uma tarefa para mais atualizações
+                            Console.Write("Digite o nome da tarefa para atualizar: ");
                             string taskToUpdateName = Console.ReadLine()!;
                             Notice? taskToUpdate = noticeList.FirstOrDefault(u => u.Name == taskToUpdateName);
 
                             if (taskToUpdate != null)
                             {
-                                Console.Write("Enter your update: ");
+                                Console.Write("Digite sua atualização: ");
                                 string updateText = Console.ReadLine()!;
 
-                                taskToUpdate.NewUpdate(user.Name, updateText, "Development"); // Add a new update to the task
-                                Console.WriteLine("Task updated successfully.");
+                                taskToUpdate.NewUpdate(user.Name, updateText, "Desenvolvimento"); // Adiciona uma nova atualização à tarefa
+                                Console.WriteLine("Tarefa atualizada com sucesso.");
                             }
                             else
                             {
-                                Console.WriteLine("Task not found.");
+                                Console.WriteLine("Tarefa não encontrada.");
                             }
-                            Thread.Sleep(3000); // Pause for 3 seconds
+                            Thread.Sleep(3000); // Pausa por 3 segundos
                             break;
 
-                        case -1: // Exit the loop and return to the main menu
+                        case -1: // Sai do loop e retorna ao menu principal
                             exit = true;
                             break;
 
                         default:
+                            Console.WriteLine("Opção inválida."); // Adicionado para lidar com opções inválidas
+                            Thread.Sleep(2000);
                             break;
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Invalid input.");
+                    Console.WriteLine("Entrada inválida.");
+                    Thread.Sleep(2000);
                 }
             }
         }
         else
         {
-            Console.WriteLine("Your team has no tasks.");
+            Console.WriteLine("Sua equipe não tem tarefas.");
         }
 
-        // Prompt user to press any key to go back to the menu
-        Console.WriteLine("Press any key to go back to the menu.");
+        // Solicita ao usuário para pressionar qualquer tecla para voltar ao menu
+        Console.WriteLine("Pressione qualquer tecla para voltar ao menu.");
         Console.ReadKey();
     }
 }

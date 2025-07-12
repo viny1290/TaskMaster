@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\vinij\\OneDrive\\Área de Trabalho\\-\\aulas\\TaskMaster\\TaskMaster.csproj": {}
+    "C:\\Users\\vinij\\Desktop\\_\\Programas\\Projetos Pessoais\\TaskMaster\\TaskMaster.csproj": {}
   },
   "projects": {
-    "C:\\Users\\vinij\\OneDrive\\Área de Trabalho\\-\\aulas\\TaskMaster\\TaskMaster.csproj": {
+    "C:\\Users\\vinij\\Desktop\\_\\Programas\\Projetos Pessoais\\TaskMaster\\TaskMaster.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\vinij\\OneDrive\\Área de Trabalho\\-\\aulas\\TaskMaster\\TaskMaster.csproj",
+        "projectUniqueName": "C:\\Users\\vinij\\Desktop\\_\\Programas\\Projetos Pessoais\\TaskMaster\\TaskMaster.csproj",
         "projectName": "TaskMaster",
-        "projectPath": "C:\\Users\\vinij\\OneDrive\\Área de Trabalho\\-\\aulas\\TaskMaster\\TaskMaster.csproj",
+        "projectPath": "C:\\Users\\vinij\\Desktop\\_\\Programas\\Projetos Pessoais\\TaskMaster\\TaskMaster.csproj",
         "packagesPath": "C:\\Users\\vinij\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\vinij\\OneDrive\\Área de Trabalho\\-\\aulas\\TaskMaster\\obj\\",
+        "outputPath": "C:\\Users\\vinij\\Desktop\\_\\Programas\\Projetos Pessoais\\TaskMaster\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\vinij\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -58,7 +58,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.406/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
